@@ -4,17 +4,15 @@ using UnityEngine;
 
 
 public class TurretAI : MonoBehaviour {
-    
-   // public Transform Target;
-  //  GameObject NewTarget;
 
-    private void Start()
-    {
-       
-    }
+    // public Transform Target;
+    //  GameObject NewTarget;
+    Coroutine LookingTarget;
+
+   
     //when a player enters into this area it will start the targetingSystem coroutine to look at the target.
-    public void OnTriggerStay (Collider Target) {
-        StartCoroutine(TargetingSystem(Target));
+    public void OnTriggerEnter (Collider Target) {
+        LookingTarget = StartCoroutine(TargetingSystem(Target));
         print("intruder detected");
         
         //get the object that entered the area to target it. 
@@ -22,7 +20,7 @@ public class TurretAI : MonoBehaviour {
 
     //this will target what ever is in the trap area and look at it. When the player leaves it will stop looking and shooting
     IEnumerator TargetingSystem(Collider newTarget) {
-        if (true)
+        while (true)
         {
             
            // print("I should be looking at the target");
@@ -31,8 +29,12 @@ public class TurretAI : MonoBehaviour {
             //enter the calling for the shooting here
 
         }
-        else StopCoroutine(TargetingSystem(newTarget));
        
+       
+    }
+    public void OnTriggerExit(Collider Target)
+    {
+        StopCoroutine(LookingTarget);
     }
 }
 
